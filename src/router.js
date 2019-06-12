@@ -1,23 +1,40 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "./views/Home.vue";
+import Endereco from "./components/Endereco";
+import Pagamento from "./components/Pagamento";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: "/",
+      name: "home",
+      props: true,
       component: Home
+      /*children: [
+        {
+          path: "endereco/:id",
+          components: { default: Endereco },
+          props: true
+        },
+        { path: "pagamento/:id", component: Pagamento }
+      ]*/
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: "/endereco",
+      name: "endereco",
+      props: true,
+      component: Endereco
+    },
+    {
+      path: "/pagamento",
+      name: "pagamento",
+      props: true,
+      component: Pagamento
     }
   ]
-})
+});
+
+//  component: () => import(/* webpackChunkName: "about" */ './views/About.vue')

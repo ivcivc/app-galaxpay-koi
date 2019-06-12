@@ -1,29 +1,41 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
+    <!--<div id="nav">
+      <router-link to="/">Home</router-link active-class="classe" exact tag='li'> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div>-->
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0px;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  height: calc(100% - 40px);
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+body {
+  background-color: rgb(233, 240, 243);
+}
+
+div {
+  border: solid 0px red;
+  background: auto;
+}
+
+div1111 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 3px dodgerblue;
+  background: #fff;
 }
 </style>
