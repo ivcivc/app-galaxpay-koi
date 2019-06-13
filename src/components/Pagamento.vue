@@ -1,32 +1,56 @@
 <template>
-  <div>
-    <!--<div class="freebirdFormviewerViewFormBanner freebirdHeaderMast"></div>-->
+  <div id="bloco2">
+    <h2 class="content-block">Profile</h2>
 
-    <Card :width="'100%'" style="margin-top:-0px;">
-      <div slot="top">
-        <div class="freebirdFormviewerViewFormBanner freebirdHeaderMast"></div>
+    <div class="content-block dx-card responsive-paddings" id="bloco1">
+      <div class="conteudo">
+        <Painel id="bloco3">
+          <div slot="title">
+            <b>
+              <h4>DADOS DO PAGAMENTO</h4>
+            </b>
+          </div>
+          <div slot="content">
+            <table>
+              <tr>
+                <td>
+                  <b>Cliente:</b>
+                </td>
+                <td>Ivan Carlos Araujo de Oliveira</td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Periodicidade:</b>
+                </td>
+                <td>Mensal</td>
+              </tr>
+            </table>
+          </div>
+        </Painel>
+        <span>Ivan Oliveira</span>
       </div>
-      <div slot="title">
-        <h2>Pagamento</h2>
-      </div>
-      <div slot="content">contet</div>
-    </Card>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import DxButton from "devextreme-vue/button";
-import Card from "../components/Card";
 import ArrayStore from "devextreme/data/array_store";
+import Painel from "../components/Painel";
 
 export default {
   name: "home",
   components: {
     DxButton,
-    Card
+    Painel
   },
-  props: ["id"],
+
+  computed: {
+    pessoa() {
+      return this.$store.getters["pessoa"];
+    }
+  },
 
   mounted() {
     window.w = this;
@@ -45,53 +69,9 @@ export default {
 };
 </script>
 
-<style scoped >
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.freebirdHeaderMast {
-  background-image: url(https://lh6.googleusercontent.com/pL7Y5YwkYdMb0RHBlzjQpyy6Yh4Ym2jHZln0aCLUYnDR5a8lIl5j3Ai_IbUVkpVYI2KP_FwsMA=w1134);
-  background-size: cover;
-  background-position: center;
-  color: rgba(0, 0, 0, 1);
-}
-
-.freebirdFormviewerViewFormBanner {
-  height: 278px;
-}
-
-.ivc-list {
-  display: flex;
-}
-
-.janela {
-  display: flex;
-  align-items: stretch;
-  justify-content: start;
-  border: solid 2px #ddd;
-  background-color: rgb(233, 240, 243);
-}
-
-.imagem {
-  padding: 8px;
-}
-
-.header {
-  padding: 15px;
-}
-
-.obs {
-  padding: 15px;
-}
-
-.valor {
-  padding: 15px;
-}
-
-.botaoSelecionado {
-  padding: 15px;
-  align-self: end;
+<style>
+.conteudo {
+  padding: 20px;
+  width: 60%;
 }
 </style>

@@ -5,7 +5,7 @@
     </header>
     <main>
       <div class="ivc-card">
-        <div class="ivc-janela">
+        <div class="ivc-janela" :width="width">
           <div class="ivc-card-title">
             <slot name="title"></slot>
           </div>

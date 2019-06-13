@@ -6,7 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     eventos: [],
-    evento: {}
+    evento: {},
+    pessoa: {},
+    endereco: {}
   },
   mutations: {
     setEvento(state, payload) {
@@ -14,6 +16,12 @@ export default new Vuex.Store({
     },
     setEventos(state, payload) {
       state.eventos = payload;
+    },
+    setPessoa(state, payload) {
+      state.pessoa = payload;
+    },
+    setEndereco(state, payload) {
+      state.endereco = payload;
     }
   },
   actions: {
@@ -86,12 +94,25 @@ export default new Vuex.Store({
       ];
 
       commit("setEventos", eventos);
+    },
+
+    setPessoa({ commit }, payload) {
+      commit("setPessoa", payload);
+    },
+    setEndereco({ commit }, payload) {
+      commit("setEndereco", payload);
     }
   },
 
   getters: {
     getEventos(state) {
       return state.eventos;
+    },
+    pessoa(state) {
+      return state.pessoa;
+    },
+    endereco(state) {
+      return state.endereco;
     }
   }
 });

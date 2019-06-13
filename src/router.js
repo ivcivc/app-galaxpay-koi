@@ -23,8 +23,8 @@ export default new Router({
       ]*/
     },
     {
-      path: "/endereco",
-      name: "endereco",
+      path: "/dados",
+      name: "dados",
       props: true,
       component: Endereco
     },

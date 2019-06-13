@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!--<div class="freebirdFormviewerViewFormBanner freebirdHeaderMast"></div>-->
-
     <Card :width="'100%'" style="margin-top:-0px;">
       <div slot="top">
         <div class="freebirdFormviewerViewFormBanner freebirdHeaderMast"></div>
@@ -68,7 +66,6 @@ export default {
     DxButton,
     Card
   },
-  props: ["id"],
 
   mounted() {
     window.w = this;
@@ -109,10 +106,9 @@ export default {
     },
 
     onSelected(i) {
-      console.log(i);
       this.evento = i;
       const id = this.evento.id;
-      if (id) this.$router.push({ path: "/endereco", params: { id } });
+      if (id) this.$router.push({ path: "/dados", params: { id } });
     }
   }
 };

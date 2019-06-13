@@ -5,15 +5,6 @@ import store from "./store";
 
 import "./config/axios";
 
-import "devextreme/dist/css/dx.common.css";
-import "devextreme/dist/css/dx.light.compact.css";
-import "./assets/css/flexboxgrid.min.css";
-
-//import "./assets/js/vue-form-wizard.min.css";
-//import "./assets/js/vue-form-wizard.js";
-
-//import "./assets/icon/themify-icons.css";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -22,10 +13,11 @@ library.add(faCoffee);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-Vue.config.productionTip = false;
+import "devextreme/dist/css/dx.carmine.css";
+import "devextreme/dist/css/dx.common.css";
+import "./assets/css/flexboxgrid.min.css";
 
-//onsole.log(VueFormWizard);
-//Vue.use(VueFormWizard);
+Vue.config.productionTip = false;
 
 new Vue({
   router,
