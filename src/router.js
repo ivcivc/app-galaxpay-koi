@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Endereco from "./components/Endereco";
 import Pagamento from "./components/Pagamento";
+import Cpf from "./components/Cpf";
 
 Vue.use(Router);
 
@@ -28,6 +29,14 @@ export default new Router({
       props: true,
       component: Endereco
     },
+
+    {
+      path: "/cpf",
+      name: "cpf",
+      props: true,
+      component: Cpf
+    },
+
     {
       path: "/pagamento",
       name: "pagamento",

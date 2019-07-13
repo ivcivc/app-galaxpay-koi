@@ -11,7 +11,7 @@
         <template v-for="item, index in eventos">
           <div class="janela">
             <div class="imagem" v-show="item.imagem != ''">
-              <img :src="item.imagem" height="220" width="220">
+              <img :src="item.imagem" height="220" width="220" />
             </div>
             <div class="ivc-detalhes">
               <div class="header">
@@ -109,8 +109,9 @@ export default {
       this.evento = i;
       const id = this.evento.id;
       if (id) {
+        console.log("aqui");
         this.$store.dispatch("setEvento", this.evento);
-        this.$router.push({ path: "/dados", params: { id } });
+        this.$router.push({ path: "/cpf", params: { id } });
       }
     }
   }

@@ -20,7 +20,7 @@
                     <div class="dx-field">
                       <dx-text-box value v-model="pessoa.cpf" mask="000.000.000-00">
                         <dx-validator>
-                          <dx-required-rule message="Informe o CPF."/>
+                          <dx-required-rule message="Informe o CPF." />
                         </dx-validator>
                       </dx-text-box>
                     </div>
@@ -32,8 +32,8 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="pessoa.email">
                       <dx-validator>
-                        <dx-required-rule message="Informe o seu email principal."/>
-                        <dx-email-rule message="Formato inválido para email."/>
+                        <dx-required-rule message="Informe o seu email principal." />
+                        <dx-email-rule message="Formato inválido para email." />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -47,8 +47,8 @@
                     <div class="dx-field">
                       <dx-text-box value v-model="pessoa.nome">
                         <dx-validator>
-                          <dx-string-length-rule :min="5" message="Informe o seu nome completo.."/>
-                          <dx-required-rule message="Informe o seu nome completo."/>
+                          <dx-string-length-rule :min="5" message="Informe o seu nome completo.." />
+                          <dx-required-rule message="Informe o seu nome completo." />
                         </dx-validator>
                       </dx-text-box>
                     </div>
@@ -60,7 +60,7 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="pessoa.rg">
                       <dx-validator>
-                        <dx-required-rule message="Informe o numero do RG."/>
+                        <dx-required-rule message="Informe o numero do RG." />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -81,7 +81,7 @@
                         v-model="pessoa.sexo"
                       >
                         <dx-validator>
-                          <dx-required-rule message="Informe o sexo."/>
+                          <dx-required-rule message="Informe o sexo." />
                         </dx-validator>
                       </dx-select-box>
                     </div>
@@ -93,7 +93,7 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="pessoa.profissao">
                       <dx-validator>
-                        <dx-required-rule message="Informe a sua profissão."/>
+                        <dx-required-rule message="Informe a sua profissão." />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -107,7 +107,7 @@
                     <div class="dx-field">
                       <dx-date-box :value="pessoa.dnasc" type="date" v-model="pessoa.dnasc">
                         <dx-validator>
-                          <dx-required-rule message="Informe a data de nascimento"/>
+                          <dx-required-rule message="Informe a data de nascimento" />
                         </dx-validator>
                       </dx-date-box>
                     </div>
@@ -126,7 +126,7 @@
                       v-model="pessoa.estado_civil"
                     >
                       <dx-validator>
-                        <dx-required-rule message="Informe o estado civil"/>
+                        <dx-required-rule message="Informe o estado civil" />
                       </dx-validator>
                     </dx-select-box>
                   </div>
@@ -166,7 +166,7 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="pessoa.tel_celular" mask="(00) 00000-0000">
                       <dx-validator>
-                        <dx-required-rule message="Informe o seu WatsApp"/>
+                        <dx-required-rule message="Informe o seu WatsApp" />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -180,7 +180,7 @@
                     <div class="dx-field">
                       <dx-text-box value v-model="endereco.logradouro">
                         <dx-validator>
-                          <dx-required-rule message="Informe o seu endereço"/>
+                          <dx-required-rule message="Informe o seu endereço" />
                         </dx-validator>
                       </dx-text-box>
                     </div>
@@ -202,7 +202,7 @@
                     <div class="dx-field">
                       <dx-text-box value v-model="endereco.bairro">
                         <dx-validator>
-                          <dx-required-rule message="Informe o bairro"/>
+                          <dx-required-rule message="Informe o bairro" />
                         </dx-validator>
                       </dx-text-box>
                     </div>
@@ -214,7 +214,7 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="endereco.cidade">
                       <dx-validator>
-                        <dx-required-rule message="Informe a cidade"/>
+                        <dx-required-rule message="Informe a cidade" />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -228,7 +228,7 @@
                     <div class="dx-field">
                       <dx-text-box value v-model="endereco.estado" mask="AA">
                         <dx-validator>
-                          <dx-required-rule message="Informe o estado"/>
+                          <dx-required-rule message="Informe o estado" />
                         </dx-validator>
                       </dx-text-box>
                     </div>
@@ -240,7 +240,7 @@
                   <div class="dx-field">
                     <dx-text-box value v-model="endereco.cep" mask="00.000-000">
                       <dx-validator>
-                        <dx-required-rule message="Informe o cep"/>
+                        <dx-required-rule message="Informe o cep" />
                       </dx-validator>
                     </dx-text-box>
                   </div>
