@@ -343,7 +343,9 @@ export default {
 
   mounted() {
     window.w = this;
-    this.$forceUpdate();
+    console.log("montado");
+    //this.$forceUpdate();
+    console.log("forçando update");
   },
 
   computed: {

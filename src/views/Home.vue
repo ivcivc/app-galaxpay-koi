@@ -108,7 +108,10 @@ export default {
     onSelected(i) {
       this.evento = i;
       const id = this.evento.id;
-      if (id) this.$router.push({ path: "/dados", params: { id } });
+      if (id) {
+        this.$store.dispatch("setEvento", this.evento);
+        this.$router.push({ path: "/dados", params: { id } });
+      }
     }
   }
 };

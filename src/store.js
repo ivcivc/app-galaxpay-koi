@@ -8,7 +8,8 @@ export default new Vuex.Store({
     eventos: [],
     evento: {},
     pessoa: {},
-    endereco: {}
+    endereco: {},
+    loadingVisible: false
   },
   mutations: {
     setEvento(state, payload) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     setEndereco(state, payload) {
       state.endereco = payload;
+    },
+    setLoadingVisible(state) {
+      state.loadingVisible = !state.loadingVisible;
     }
   },
   actions: {
@@ -56,7 +60,7 @@ export default new Vuex.Store({
           obs:
             "<p><strong>Local do evento:</strong> Hotel Fazenda Vale do Amanhecer</p><p><strong>Endereço</strong>: R. Teófilo Otoní, 91 - Fernão Dias, Igarapé - MG</p><p>www.valeamanhecer.com.br</p><p>Dúvidas ligue para (31) 98402-0123</p><p>ou envie um e-mail para koi@institutokoi.com.br</p>",
           siteExibir: "SIM",
-          siteParcelas: 2,
+          siteParcelas: 6,
           siteEvento: "Leader Training 57 Plus Aumentado",
           id: 2,
           ok: false,
@@ -71,7 +75,7 @@ export default new Vuex.Store({
           obs:
             '<p><strong>Local do evento:</strong> <span style="color: rgb(79, 63, 224);">Hotel Fazenda Vale do Amanhecer</span></p><p><strong>Endereço</strong>: R. Teófilo Otoní, 91 - Fernão Dias, Igarapé - MG - <em> www.valeamanhecer.com.br</em></p><p>Dúvidas ligue para (31) 98402-0123</p><p>ou envie um e-mail para koi@institutokoi.com.br</p>',
           siteExibir: "SIM",
-          siteParcelas: 11,
+          siteParcelas: 12,
           siteEvento: "Renascimento",
           id: 3,
           ok: false,
@@ -85,7 +89,7 @@ export default new Vuex.Store({
           obs:
             "Endereço do <i>evento:</i> Hotel Fazenda Vale Amanhecer.<br/>R. Teófilo Otoní, 91 - Fernão Dias, Igarapé - MG, www.valeamanhecer.com.br</br>Dúvidas ligue para (31) 98402-0123 ou envie um e-mail para koi@institutokoi.com.br",
           siteExibir: "SIM",
-          siteParcelas: 1,
+          siteParcelas: 3,
           siteEvento: "Gaivotas",
           id: 1,
           ok: false,
@@ -101,6 +105,12 @@ export default new Vuex.Store({
     },
     setEndereco({ commit }, payload) {
       commit("setEndereco", payload);
+    },
+    setLoadingVisible({ commit }) {
+      commit("setLoadingVisible");
+    },
+    setScreen({ commit }, payload) {
+      commit("setScreen", payload);
     }
   },
 
@@ -113,6 +123,12 @@ export default new Vuex.Store({
     },
     endereco(state) {
       return state.endereco;
+    },
+    evento(state) {
+      return state.evento;
+    },
+    loadingVisible(state) {
+      return state.loadingVisible;
     }
   }
 });

@@ -6,10 +6,16 @@ import store from "./store";
 import "./config/axios";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoffee,
+  faShieldAlt,
+  faUserSecret
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faCoffee);
+library.add(faShieldAlt);
+library.add(faUserSecret);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
