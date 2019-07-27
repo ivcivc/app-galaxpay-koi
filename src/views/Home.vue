@@ -10,8 +10,8 @@
       <div slot="content">
         <template v-for="item, index in eventos">
           <div class="janela">
-            <div class="imagem" v-show="item.imagem != ''">
-              <img :src="item.imagem" height="220" width="220" />
+            <div class="imagem" v-show="item.siteLink != ''">
+              <img :src="item.siteLink" height="220" width="220" />
             </div>
             <div class="ivc-detalhes">
               <div class="header">
@@ -21,7 +21,7 @@
               </div>
 
               <div class style="margin-top:-15px;">
-                <div class="obs" :id="`a${index}`">{{ strip(item.obs, index )}}</div>
+                <div class="obs" :id="`a${index}`">{{ strip(item.siteDetalhes, index )}}</div>
               </div>
 
               <div class style="margin-top:-10px;">
@@ -42,6 +42,24 @@
             </div>
           </div>
         </template>
+
+        <template v-if="_exibirMensagem()">
+          <br />
+
+          <div class="row center-xs">
+            <div class="col-xs-6">
+              <div class="box">
+                <span>Nenhum treinamento disponível no momento.</span>
+                <br />
+                <dx-button
+                  text="Voltar"
+                  @click="voltar"
+                  style="margin-top:20px; margin-bottom:20px;"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
       </div>
     </Card>
   </div>
@@ -52,6 +70,9 @@
 import DxButton from "devextreme-vue/button";
 import Card from "../components/Card";
 import ArrayStore from "devextreme/data/array_store";
+
+import service from "../components/data";
+import { setTimeout } from "timers";
 
 const currencyFormatter = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -67,10 +88,29 @@ export default {
     Card
   },
 
+  beforeRouteEnter(to, from, next) {
+    //loading();
+    service
+      .getEventosSite()
+      .then(r => {
+        next(vm => {
+          vm.$store.dispatch("setEventos", r);
+          console.log("before forçar atualizaçao");
+          vm.forcarAtualizacao = 1;
+          return true;
+        });
+        // loading();
+      })
+      .catch(error => {
+        //loading();
+        next(false);
+      });
+  },
+
   mounted() {
     window.w = this;
-    this.$forceUpdate();
-    this.$store.dispatch("getEventos");
+    //this.$forceUpdate();
+    //this.$store.dispatch("getEventos");
   },
 
   filters: {
@@ -88,17 +128,41 @@ export default {
 
   computed: {
     eventos() {
-      return this.$store.getters["getEventos"];
+      return this.$store.getters["eventos"];
+    }
+  },
+
+  watch: {
+    forcarAtualizacao: function(e) {
+      if (!this.lodash.isArray(this.eventos)) {
+        return;
+      }
+      setTimeout(() => {
+        if (this.eventos.length > 0) this.$forceUpdate();
+      }, 600);
     }
   },
 
   data() {
     return {
-      evento: null
+      evento: null,
+      forcarAtualizacao: 0
     };
   },
+
   methods: {
+    voltar() {
+      window.location.href = "//institutokoi.com.br";
+    },
+    _exibirMensagem() {
+      if (!this.lodash.isArray(this.eventos)) {
+        return false;
+      }
+      return this.eventos.length === 0;
+    },
+
     strip(html, index) {
+      console.log(html);
       let d = document.getElementById("a" + index);
       if (d) {
         d.innerHTML = html;

@@ -16,11 +16,74 @@
       <div class="content-block">
         <h1 class="content-block">
           <div class="form-avatar" style="margin-bottom: 6px;padding:6px;" width="100%">
-            <img src="../assets/logoGalaxPay.png">
+            <img src="../assets/logoGalaxPay.png" />
           </div>
         </h1>
       </div>
     </div>
+
+    <dx-popup
+      :visible.sync="popupFalhaVisible"
+      :drag-enabled="false"
+      :close-on-outside-click="true"
+      :show-title="true"
+      :width="380"
+      :height="210"
+      class="popup"
+      title="Informação"
+    >
+      <p>
+        <span>{{messagem}}</span>
+      </p>
+
+      <div class="row end-xs" style="margin-top:10px;margin-bottom: 15px;">
+        <div class="col-xs-6">
+          <div class="box">
+            <dx-button
+              text="Ok"
+              type="success"
+              style="margin-top:15px;"
+              tooltip-placement="auto"
+              data-toggle="tooltip"
+              tooltip="Continuar"
+              @click="poppupConfirmar"
+            />
+          </div>
+        </div>
+      </div>
+    </dx-popup>
+
+    <dx-popup
+      :visible.sync="popupOkVisible"
+      :drag-enabled="false"
+      :close-on-outside-click="true"
+      :show-title="true"
+      :width="380"
+      :height="150"
+      class="popup"
+      title="Informação"
+    >
+      <p>
+        Full Name:&nbsp;
+        <span>Transação realizada com sucesso.</span>
+      </p>
+
+      <div class="row end-xs" style="margin-top:10px;margin-bottom: 15px;">
+        <div class="col-xs-6">
+          <div class="box">
+            <dx-button
+              text="Continuar"
+              type="success"
+              style="margin-top:15px;"
+              tooltip-placement="auto"
+              data-toggle="tooltip"
+              tooltip="Continuar"
+              @click="poppupConfirmar"
+            />
+          </div>
+        </div>
+      </div>
+    </dx-popup>
 
     <div class="content-block dx-card responsive-paddings" id="container-principal">
       <div class="conteudo-principal">
@@ -162,7 +225,7 @@
                             </span>
                             <dx-text-box :value.sync="pagto.cardNumber">
                               <dx-validator>
-                                <dx-required-rule message="Informe o número do cartão de crédito"/>
+                                <dx-required-rule message="Informe o número do cartão de crédito" />
                               </dx-validator>
                             </dx-text-box>
                           </div>
@@ -263,7 +326,7 @@
                       </div>
 
                       <!--<dx-validation-summary/>-->
-                      <dx-button text="Confirmar o pagamento" type="success" @click="validate"/>
+                      <dx-button text="Confirmar o pagamento" type="success" @click="validate" />
                     </dx-validation-group>
                   </div>
                 </div>
@@ -296,6 +359,9 @@ import ArrayStore from "devextreme/data/array_store";
 import Painel from "../components/Painel";
 import { DxList, DxItem } from "devextreme-vue/list";
 import notify from "devextreme/ui/notify";
+import { DxPopup } from "devextreme-vue/popup";
+
+import { loading } from "@/global";
 
 import axios from "axios";
 
@@ -334,7 +400,8 @@ export default {
     DxValidationSummary,
     DxValidationGroup,
     DxList,
-    DxItem
+    DxItem,
+    DxPopup
   },
 
   computed: {
@@ -347,6 +414,11 @@ export default {
     endereco() {
       return this.$store.getters["endereco"];
     },
+
+    complemento() {
+      return this.$store.getters["complemento"];
+    },
+
     investimento() {
       const { siteParcelas, valorBase } = this.$store.getters["evento"];
       let investimento = "";
@@ -393,6 +465,10 @@ export default {
 
   data() {
     return {
+      mensagem:
+        "Ocorreu uma falha na transação. Antes de reenviar confirme se os dados do cartão de crédito foram preenchidos corretamente.",
+      popupOkVisible: false,
+      popupFalhaVisible: false,
       parcelas: [],
       selectedItemKeys: [],
       bandeiras: this.getBandeiras(),
@@ -429,6 +505,11 @@ export default {
       return c;
     },
 
+    poppupConfirmar(e) {
+      this.popupFalhaVisible = false;
+      this.popupOkVisible = false;
+    },
+
     beforeSave() {
       const isPgto = this.selectedItemKeys.length > 0;
 
@@ -457,7 +538,7 @@ export default {
         if (this.beforeSave()) {
         }
 
-        if (this.getCardFlag(this.pagto.cardNumber)) {
+        if (!this.getCardFlag(this.pagto.cardNumber)) {
           const position = {
             at: "center center",
             of: "#bloco1"
@@ -472,7 +553,7 @@ export default {
             "error",
             3000
           );
-          return;
+          return true;
         }
 
         let payload = {};
@@ -480,11 +561,82 @@ export default {
         payload.endereco = this.endereco;
         payload.pessoa = this.pessoa;
         payload.card = this.pagto;
+        payload.pagto = {
+          valorBase: this.selectedItemKeys[0].valorBase,
+          valor: this.selectedItemKeys[0].valor,
+          parcela: this.selectedItemKeys[0].key
+        };
+        payload.complemento = this.complemento;
 
         console.log(payload);
+
+        this.gravar(payload);
         // form data is valid
         //params.validationGroup.reset();
       }
+    },
+
+    gravar(payload) {
+      loading();
+      axios
+        .post(`${process.env.VUE_APP_SERVER_URL}/site`, payload)
+        .then(res => {
+          let mensagem = "Transação realizada com sucesso!";
+
+          loading();
+
+          if (res.response === undefined) {
+            this.messagem =
+              "Ocorreu uma falha de comunicação com o servidor. Tente novamente mais tarde!";
+            this.popupFalhaVisible = true;
+            let result = confirm(
+              "<div style='margin-left:15px!important;margin-right:15px!important;'><i>Ocorreu uma falha de comunicação com o servidor. Tente novamente mais tarde!</i></div>",
+              "Confirmação"
+            );
+            return;
+          }
+
+          if (!res.response.data.type) {
+            // options - retornou falha.
+            mensagem = res.response.data.message;
+            this.popupFalhaVisible = true;
+            return;
+          }
+          const position = {
+            at: "center center",
+            of: "#bloco1"
+          };
+          this.popupOkVisible = true;
+          /*notify(
+            {
+              message: mensagem,
+              position,
+              width: 300,
+              shading: true
+            },
+            "error",
+            3000
+          );*/
+        })
+        .catch(error => {
+          console.log(error);
+          loading();
+          const position = {
+            at: "center center",
+            of: "#bloco1"
+          };
+          this.popupFalhaVisible = true;
+          notify(
+            {
+              message: error.message,
+              position,
+              width: 300,
+              shading: true
+            },
+            "error",
+            5000
+          );
+        });
     },
 
     gerarParcelas() {

@@ -16,7 +16,7 @@
                   <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
                       <div class="box">
-                        <span style="margin-left:6px;">CPF *</span>
+                        <span style="margin-left:6px;">Digite o seu CPF *</span>
                         <div class="dx-field">
                           <dx-text-box value v-model="cpf" mask="000.000.000-00">
                             <dx-validator>
@@ -66,6 +66,7 @@
             </div>
           </div>
         </template>
+        <br />
       </div>
     </Card>
   </div>
@@ -76,6 +77,8 @@
 import DxButton from "devextreme-vue/button";
 import Card from "../components/Card";
 import ArrayStore from "devextreme/data/array_store";
+import axios from "axios";
+import { loading } from "@/global";
 
 const validarCpf = require("validar-cpf");
 
@@ -120,9 +123,9 @@ export default {
   },
 
   mounted() {
-    window.w = this;
     this.$forceUpdate();
-    this.$store.dispatch("getEventos");
+    this.cpf = this.$store.getters["cpf"];
+    //this.$store.dispatch("getEventos");
   },
 
   created() {
@@ -158,7 +161,6 @@ export default {
   data() {
     return {
       evento: null,
-      cpf: "",
       ruleValidate: () => {
         let cpf = this.cpf;
         if (!cpf) return 1;
@@ -166,11 +168,14 @@ export default {
         if (cpf === "") return 1;
 
         if (validarCpf(cpf)) {
+          console.log("validado ", cpf);
           return cpf;
         } else {
+          console.log("nao validado ", cpf);
           return cpf + "__";
         }
-      }
+      },
+      cpf: ""
     };
   },
   methods: {
@@ -191,7 +196,17 @@ export default {
       const result = params.validationGroup.validate();
 
       if (result.isValid) {
-        this.$router.push("/pagamento");
+        this.$store.dispatch("setCPF", this.cpf);
+        this.getCPF(this.cpf).then(r => {
+          if (r.length > 0) {
+            this.$store.dispatch("setPessoa", r[0]);
+            const endereco = r[0].endereco;
+            this.$store.dispatch("setEndereco", endereco ? endereco : {});
+          } else {
+            this.$store.dispatch("setPessoa", { cpf: this.cpf });
+          }
+          this.$router.push("/dados");
+        });
       } else {
         console.log("falhou na validação");
       }
@@ -199,14 +214,27 @@ export default {
       //params.validationGroup.reset();
     },
 
-    apagar(i) {
-      this.evento = i;
-      const id = this.evento.id;
-      if (id) {
-        console.log("aqui");
-        this.$store.dispatch("setEvento", this.evento);
-        this.$router.push({ path: "/dados", params: { id } });
-      }
+    async getCPF(cpf) {
+      loading();
+      const url = `${process.env.VUE_APP_SERVER_URL}/site/getCPF`;
+      const data = {
+        method: "post",
+        responseType: "json",
+        url,
+        data: {
+          cpf
+        }
+      };
+      const retorno = await axios(data)
+        .then(res => {
+          loading();
+          return res.data;
+        })
+        .catch(e => {
+          loading();
+          return e.data;
+        });
+      return retorno;
     }
   }
 };
@@ -253,7 +281,7 @@ export default {
   padding: 15px;
 }
 
-.valor {
+.form {
   padding: 15px;
 }
 

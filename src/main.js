@@ -23,7 +23,12 @@ import "devextreme/dist/css/dx.carmine.css";
 import "devextreme/dist/css/dx.common.css";
 import "./assets/css/flexboxgrid.min.css";
 
+import VueLodash from "vue-lodash";
+Vue.use(VueLodash, { name: "lodash" });
+
 Vue.config.productionTip = false;
+
+console.log("variavel de ambiente: ", process.env.VUE_APP_SERVER_URL);
 
 new Vue({
   router,

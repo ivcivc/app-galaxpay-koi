@@ -9,7 +9,9 @@ export default new Vuex.Store({
     evento: {},
     pessoa: {},
     endereco: {},
-    loadingVisible: false
+    complemento: { consultor_id: null, padrinho_id: null },
+    loadingVisible: false,
+    cpf: ""
   },
   mutations: {
     setEvento(state, payload) {
@@ -24,8 +26,14 @@ export default new Vuex.Store({
     setEndereco(state, payload) {
       state.endereco = payload;
     },
+    setComplemento(state, payload) {
+      state.complemento = payload;
+    },
     setLoadingVisible(state) {
       state.loadingVisible = !state.loadingVisible;
+    },
+    setCPF(state, payload) {
+      state.cpf = payload;
     }
   },
   actions: {
@@ -106,6 +114,13 @@ export default new Vuex.Store({
     setEndereco({ commit }, payload) {
       commit("setEndereco", payload);
     },
+    setComplemento({ commit }, payload) {
+      commit("setComplemento", payload);
+    },
+    setCPF({ commit }, payload) {
+      commit("setCPF", payload);
+    },
+
     setLoadingVisible({ commit }) {
       commit("setLoadingVisible");
     },
@@ -115,7 +130,7 @@ export default new Vuex.Store({
   },
 
   getters: {
-    getEventos(state) {
+    eventos(state) {
       return state.eventos;
     },
     pessoa(state) {
@@ -124,11 +139,17 @@ export default new Vuex.Store({
     endereco(state) {
       return state.endereco;
     },
+    complemento(state) {
+      return state.complemento;
+    },
     evento(state) {
       return state.evento;
     },
     loadingVisible(state) {
       return state.loadingVisible;
+    },
+    cpf(state) {
+      return state.cpf;
     }
   }
 });

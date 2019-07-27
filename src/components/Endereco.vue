@@ -16,33 +16,6 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
                   <div class="box">
-                    <span style="margin-left:6px;">CPF *</span>
-                    <div class="dx-field">
-                      <dx-text-box value v-model="pessoa.cpf" mask="000.000.000-00">
-                        <dx-validator>
-                          <dx-required-rule message="Informe o CPF." />
-                        </dx-validator>
-                      </dx-text-box>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <span style="margin-left:6px;">Email *</span>
-                  <div class="dx-field">
-                    <dx-text-box value v-model="pessoa.email">
-                      <dx-validator>
-                        <dx-required-rule message="Informe o seu email principal." />
-                        <dx-email-rule message="Formato inválido para email." />
-                      </dx-validator>
-                    </dx-text-box>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <div class="box">
                     <span style="margin-left:6px;">Nome Completo*</span>
                     <div class="dx-field">
                       <dx-text-box value v-model="pessoa.nome">
@@ -56,11 +29,43 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-md-6">
-                  <span style="margin-left:6px;">RG *</span>
+                  <div class="box">
+                    <span style="margin-left:6px;">CPF *</span>
+                    <div class="dx-field">
+                      <dx-text-box
+                        value
+                        v-model="pessoa.cpf"
+                        :disabled="true"
+                        mask="000.000.000-00"
+                      >
+                        <dx-validator>
+                          <dx-required-rule message="Informe o CPF." />
+                        </dx-validator>
+                      </dx-text-box>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                  <span style="margin-left:6px;">Email *</span>
                   <div class="dx-field">
-                    <dx-text-box value v-model="pessoa.rg">
+                    <dx-text-box value v-model="pessoa.email">
                       <dx-validator>
-                        <dx-required-rule message="Informe o numero do RG." />
+                        <dx-required-rule message="Informe o seu email principal." />
+                        <dx-email-rule message="Formato inválido para email." />
+                      </dx-validator>
+                    </dx-text-box>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                  <span style="margin-left:6px;">Profissão *</span>
+                  <div class="dx-field">
+                    <dx-text-box value v-model="pessoa.profissao">
+                      <dx-validator>
+                        <dx-required-rule message="Informe a sua profissão." />
                       </dx-validator>
                     </dx-text-box>
                   </div>
@@ -88,20 +93,7 @@
                   </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <span style="margin-left:6px;">Profissão *</span>
-                  <div class="dx-field">
-                    <dx-text-box value v-model="pessoa.profissao">
-                      <dx-validator>
-                        <dx-required-rule message="Informe a sua profissão." />
-                      </dx-validator>
-                    </dx-text-box>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-3 col-md-3">
                   <div class="box">
                     <span style="margin-left:6px;">Data Nascimento *</span>
                     <div class="dx-field">
@@ -114,7 +106,7 @@
                   </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-3 col-md-3">
                   <span style="margin-left:6px;">Estado Civil *</span>
                   <div class="dx-field">
                     <dx-select-box
@@ -153,15 +145,6 @@
 
               <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6">
-                  <div class="box">
-                    <span style="margin-left:6px;">Telefone Residencial</span>
-                    <div class="dx-field">
-                      <dx-text-box value v-model="pessoa.tel_resid" mask="(00) 0000-0000"></dx-text-box>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-6 col-md-6">
                   <span style="margin-left:6px;">Celular/WhatsApp *</span>
                   <div class="dx-field">
                     <dx-text-box value v-model="pessoa.tel_celular" mask="(00) 00000-0000">
@@ -169,6 +152,69 @@
                         <dx-required-rule message="Informe o seu WatsApp" />
                       </dx-validator>
                     </dx-text-box>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                  <div class="box">
+                    <span style="margin-left:6px;">Tamanho da camisa *</span>
+                    <div class="dx-field">
+                      <dx-select-box
+                        :items="camisas"
+                        :show-clear-button="true"
+                        placeholder="Selecione"
+                        :disabled="false"
+                        :searchEnabled="true"
+                        v-model="pessoa.camisa"
+                      >
+                        <dx-validator>
+                          <dx-required-rule message="Informe o tamanho da camisa." />
+                        </dx-validator>
+                      </dx-select-box>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                  <div class="box">
+                    <span style="margin-left:6px;">Nome do Padrinho</span>
+                    <div class="dx-field">
+                      <dx-select-box
+                        :search-enabled="true"
+                        :data-source="pessoas"
+                        search-mode="contains"
+                        search-expr="nome"
+                        :search-timeout="200"
+                        :min-search-length="3"
+                        :show-data-before-search="false"
+                        display-expr="nome"
+                        value-expr="id"
+                        :value="1"
+                        v-model="complemento.padrinho_id"
+                      ></dx-select-box>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                  <div class="box">
+                    <span style="margin-left:6px;">Nome do Consultor</span>
+                    <div class="dx-field">
+                      <dx-select-box
+                        :search-enabled="true"
+                        :data-source="consultores"
+                        search-mode="contains"
+                        search-expr="nome"
+                        :search-timeout="200"
+                        :min-search-length="3"
+                        :show-data-before-search="false"
+                        display-expr="nome"
+                        value-expr="id"
+                        :value="1"
+                        v-model="complemento.consultor_id"
+                      ></dx-select-box>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -248,7 +294,7 @@
               </div>
             </div>
 
-            <div class="row between-xs">
+            <div class="row end-xs">
               <div class="col-xs-2">
                 <div class="box">
                   <dx-button
@@ -289,6 +335,8 @@ import Card from "../components/Card";
 import ArrayStore from "devextreme/data/array_store";
 
 import notify from "devextreme/ui/notify";
+import CustomStore from "devextreme/data/custom_store";
+import DataSource from "devextreme/data/data_source";
 
 import {
   DxCheckBox,
@@ -316,8 +364,90 @@ import {
 } from "devextreme-vue/validator";
 
 import service from "./data";
-console.log("service ", service);
-console.log(service.getSexos());
+
+const dataSourcePessoa = new DataSource({
+  store: new CustomStore({
+    //loadMode: "raw",
+    key: "id",
+
+    byKey: key => {
+      console.log("buscando byKey ", key);
+      return Pessoa.getPessoas(key);
+    },
+
+    load: function(loadOptions) {
+      let params = {};
+      let o = {
+        isLocalizar: true,
+        grupos: ["ALUNO"],
+        isLookup: true,
+        take: 20,
+        page: 1
+      };
+
+      if (!loadOptions.searchValue) {
+        loadOptions.searchValue = null;
+      } else {
+        let key = "nome";
+        let value = loadOptions.searchValue;
+        if (value) {
+          o[key] = value;
+        }
+      }
+
+      let sort = null;
+
+      if (_.isArray(loadOptions.sort)) {
+        o["sortSelector"] = loadOptions.sort[0].selector;
+        o["sortDirection"] = loadOptions.sort[0].desc ? "DESC" : "ASC";
+      }
+
+      return service.getPessoaIndex(o);
+    }
+  })
+});
+
+const dataSourceConsultor = new DataSource({
+  store: new CustomStore({
+    //loadMode: "raw",
+    key: "id",
+
+    byKey: key => {
+      console.log("buscando byKey ", key);
+      return Pessoa.getPessoas(key);
+    },
+
+    load: function(loadOptions) {
+      let params = {};
+      let o = {
+        isLocalizar: true,
+        grupos: ["CONSULTOR"],
+        isLookup: true,
+        take: 20,
+        page: 1
+      };
+
+      if (!loadOptions.searchValue) {
+        loadOptions.searchValue = null;
+      } else {
+        let key = "nome";
+        let value = loadOptions.searchValue;
+        if (value) {
+          o[key] = value;
+        }
+      }
+
+      let sort = null;
+
+      if (_.isArray(loadOptions.sort)) {
+        o["sortSelector"] = loadOptions.sort[0].selector;
+        o["sortDirection"] = loadOptions.sort[0].desc ? "DESC" : "ASC";
+      }
+
+      return service.getPessoaIndex(o);
+    }
+  })
+});
 
 export default {
   name: "home",
@@ -342,10 +472,7 @@ export default {
   },
 
   mounted() {
-    window.w = this;
-    console.log("montado");
     //this.$forceUpdate();
-    console.log("forçando update");
   },
 
   computed: {
@@ -355,6 +482,10 @@ export default {
 
     endereco() {
       return this.$store.getters["endereco"];
+    },
+
+    complemento() {
+      return this.$store.getters["complemento"];
     }
   },
 
@@ -362,8 +493,11 @@ export default {
     let estadosCivis = service.getEstadosCivis();
     return {
       formValidation: null,
+      camisas: ["PP", "P", "M", "G", "GG", "XGG"],
       sexos: service.getSexos(),
-      estadosCivis: estadosCivis
+      estadosCivis: estadosCivis,
+      consultores: dataSourceConsultor,
+      pessoas: dataSourcePessoa
     };
   },
   methods: {
@@ -394,6 +528,7 @@ export default {
     setar() {
       this.$store.dispatch("setPessoa", this.pessoa);
       this.$store.dispatch("setEndereco", this.endereco);
+      this.$store.dispatch("setComplemento", this.complemento);
     },
 
     voltar() {
