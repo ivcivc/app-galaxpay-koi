@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<div class="footer">
+    <!--<div class="footer"> 9
       <div>
         <div class="row">
           <div class="col-xs-offset-6 col-xs-11">
@@ -8,7 +8,7 @@
           </div>
         </div>
       </div>
-    </div>------>
+    </div>------->
 
     <div
       style="background-color: #00b19d;display: flex;flex-direction: column;align-items: flex-end;padding: 5px;"
