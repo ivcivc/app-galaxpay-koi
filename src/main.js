@@ -26,6 +26,11 @@ import "./assets/css/flexboxgrid.min.css";
 import VueLodash from "vue-lodash";
 Vue.use(VueLodash, { name: "lodash" });
 
+import "v-slim-dialog/dist/v-slim-dialog.css";
+import SlimDialog from "v-slim-dialog";
+
+Vue.use(SlimDialog);
+
 Vue.config.productionTip = false;
 
 console.log("variavel de ambiente: ", process.env.VUE_APP_SERVER_URL);

@@ -33,7 +33,7 @@
       title="Informação"
     >
       <p>
-        <span>{{messagem}}</span>
+        <span></span>
       </p>
 
       <div class="row end-xs" style="margin-top:10px;margin-bottom: 15px;">
@@ -356,6 +356,7 @@ const decimalFormatter = new Intl.NumberFormat("pt-BR", {
 
 // @ is an alias to /src
 import ArrayStore from "devextreme/data/array_store";
+import { confirm } from "devextreme/ui/dialog";
 import Painel from "../components/Painel";
 import { DxList, DxItem } from "devextreme-vue/list";
 import notify from "devextreme/ui/notify";
@@ -585,29 +586,74 @@ export default {
 
           loading();
 
+          if (res.status === 200) {
+            mensagem = res.data.message;
+            const options = { title: "Info", size: "sm" };
+            this.$dialogs.alert(mensagem, options).then(e => {
+              console.log("alerta retornou ", e);
+            });
+
+            return;
+          }
+
           if (res.response === undefined) {
-            this.messagem =
+            mensagem =
               "Ocorreu uma falha de comunicação com o servidor. Tente novamente mais tarde!";
+
+            const options = { title: "Info", size: "sm" };
+            this.$dialogs.alert(mensagem, options).then(e => {
+              console.log("alerta retornou ", e);
+            });
+
+            /*this.messagem =
+              "Ocorreu uma falha de comunicação com o servidor. Tente novamente mais tarde!";
+              
             this.popupFalhaVisible = true;
             let result = confirm(
               "<div style='margin-left:15px!important;margin-right:15px!important;'><i>Ocorreu uma falha de comunicação com o servidor. Tente novamente mais tarde!</i></div>",
               "Confirmação"
-            );
+            );*/
             return;
           }
 
-          if (!res.response.data.type) {
+          if (res.response.status === 400) {
+            // options - retornou falha.
+            /*mensagem = res.response.data.message;
+            this.popupFalhaVisible = true;*/
+            mensagem =
+              "Ocorreu uma falha na transação. Tente novamente mais tarde!";
+            const options = { title: "Info", size: "sm" };
+            this.$dialogs.alert(mensagem, options).then(e => {
+              console.log("alerta retornou ", e);
+            });
+
+            /*let result = confirm(
+              "<div style='margin-left:15px!important;margin-right:15px!important;'><i>Ocorreu uma falha na transação. Tente novamente mais tarde!</i></div>",
+              "Confirmação"
+            );*/
+            return;
+          }
+
+          /*if (!res.response.data.type) {
             // options - retornou falha.
             mensagem = res.response.data.message;
             this.popupFalhaVisible = true;
             return;
-          }
-          const position = {
+          }*/
+
+          mensagem = res.response.data.message;
+
+          let result = confirm(
+            `<div style='margin-left:15px!important;margin-right:15px!important;'><i>${mensagem}</i></div>`,
+            "Confirmação"
+          );
+
+          /*const position = {
             at: "center center",
             of: "#bloco1"
           };
           this.popupOkVisible = true;
-          /*notify(
+          notify(
             {
               message: mensagem,
               position,
@@ -648,6 +694,12 @@ export default {
         let valorMask = this.currency(valorBase / parcela);
         let valorString = decimalFormatter.format(valorBase / parcela);
         let valor = parseFloat(valorString.replace(".", "").replace(",", "."));
+        if (valor * parcela < valorBase) {
+          valor =  decimalFormatter.format(valor + 0.01);
+          valorString = decimalFormatter.format(parseFloat(valor.replace(".", "").replace(",", ".")) + 0.01);
+          valor = parseFloat(valorString.replace(".", "").replace(",", ".")); 
+          valorMask = this.currency(valor);         
+        }
         let juros = "sem juros";
         this.parcelas.push({
           id: i + 1,
