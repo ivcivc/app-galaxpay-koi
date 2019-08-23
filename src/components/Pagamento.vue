@@ -587,7 +587,9 @@ export default {
           loading();
 
           if (res.status === 200) {
-            mensagem = res.data.message;
+            //mensagem = res.data.message;
+            mensagem =
+              "Transação realizada com sucesso. A confirmação de pagamento será feita através do seu email.";
             const options = { title: "Info", size: "sm" };
             this.$dialogs.alert(mensagem, options).then(e => {
               console.log("alerta retornou ", e);
@@ -603,6 +605,7 @@ export default {
             const options = { title: "Info", size: "sm" };
             this.$dialogs.alert(mensagem, options).then(e => {
               console.log("alerta retornou ", e);
+              window.location = "http://www.institutokoi.com.br/";
             });
 
             /*this.messagem =
@@ -695,10 +698,12 @@ export default {
         let valorString = decimalFormatter.format(valorBase / parcela);
         let valor = parseFloat(valorString.replace(".", "").replace(",", "."));
         if (valor * parcela < valorBase) {
-          valor =  decimalFormatter.format(valor + 0.01);
-          valorString = decimalFormatter.format(parseFloat(valor.replace(".", "").replace(",", ".")) + 0.01);
-          valor = parseFloat(valorString.replace(".", "").replace(",", ".")); 
-          valorMask = this.currency(valor);         
+          valor = decimalFormatter.format(valor + 0.01);
+          valorString = decimalFormatter.format(
+            parseFloat(valor.replace(".", "").replace(",", ".")) + 0.01
+          );
+          valor = parseFloat(valorString.replace(".", "").replace(",", "."));
+          valorMask = this.currency(valor);
         }
         let juros = "sem juros";
         this.parcelas.push({
